@@ -1,0 +1,47 @@
+service: rest-api
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  memorySize: 128 # set the maximum memory of the Lambdas in Megabytes
+  timeout: 10 # the timeout is 10 seconds (default is 6 seconds)
+  stage: dev # setting the env stage to dev, this will be visible in the routes
+  region: ap-south-1
+
+functions:
+  verify-token:
+    handler: auth/VerifyToken.auth
+
+  login:
+    handler: auth/AuthHandler.login
+    events:
+      - http:
+          path: login # login
+          method: post
+          cors: true
+
+  register:
+    handler: auth/AuthHandler.register
+    events:
+      - http:
+          path: register # register new user
+          method: post
+          cors: true
+
+  me:
+    handler: auth/AuthHandler.me
+    events:
+      - http:
+          path: me # this function will respond with the current authenticated user based on the provided JWT token
+          method: get
+          cors: true
+  getusers:
+    handler: user/UserHandler.getUsers
+    events:
+      - http:
+          path: users # fetch list of all registered users from db
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline # adding the plugin to be able to run the offline

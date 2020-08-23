@@ -1,0 +1,4 @@
+{
+  "DB": "mongodb+srv://dbadmin:reallystrongpassword@cluster0.pt260.mongodb.net/test?retryWrites=true&w=majority",
+  "JWT_SECRET": "reallystrongsecret"
+}
